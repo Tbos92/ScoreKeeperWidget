@@ -1,46 +1,55 @@
+const p1Button = document.getElementById("p1Button");
+const p2Button = document.getElementById("p2Button");
+const resetBtn = document.getElementById("reset");
+const winningScoreSelect = document.getElementById("playto");
+
 let p1Score = 0;
 let p2Score = 0;
-
-// const setScore = document.getElementById("playto");
-
-let winningScore = 5;
+let winningScore = 3;
 
 let gameOver = false;
 
-const p1Button = document.getElementById("p1Button");
-p1Button.addEventListener("click", (event) => {
+p1Button.addEventListener("click", () => {
   console.log("you selected p1Button");
   if (!gameOver) {
     p1Score++;
     if (p1Score === winningScore) {
       gameOver = true;
+      p1Display.classList.add("winner");
+      p2Display.classList.add("loser");
     }
     p1Display.textContent = p1Score;
   }
 });
 
-const p2Button = document.getElementById("p2Button");
-p2Button.addEventListener("click", (event) => {
+p2Button.addEventListener("click", () => {
   console.log("you selected p2Button");
   if (!gameOver) {
     p2Score++;
     if (p2Score === winningScore) {
       gameOver = true;
+      p2Display.classList.add("winner");
+      p1Display.classList.add("loser");
     }
     p2Display.textContent = p2Score;
   }
 });
 
-const resetBtn = document.getElementById("reset");
-resetBtn.addEventListener("click", (event) => {
-  console.log("you selected resetBtn");
-  p1Score = 0;
-  p2Score = 0;
+resetBtn.addEventListener("click", reset);
 
-  p1Display.textContent = p1Score;
-  p2Display.textContent = p2Score;
-});
+function reset() {
+  p1Display.textContent = p1Score = 0;
+  p2Display.textContent = p2Score = 0;
 
-winningScore.addEventListener("input", (event) => {
-  winningScore = event.target.value;
+  p1Display.classList.remove("winner", "loser");
+  p2Display.classList.remove("winner", "loser");
+
+  gameOver = false;
+}
+
+winningScoreSelect.addEventListener("change", function () {
+  console.log(this.value);
+
+  winningScore = parseInt(this.value);
+  reset();
 });
